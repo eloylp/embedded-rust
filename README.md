@@ -15,4 +15,6 @@ A Rust workspace incubator for embedded Rust projects.
 * The [ESP embedded book](https://esp-rs.github.io/book).
 * [Awesome embedded rust repo](https://github.com/rust-embedded/awesome-embedded-rust).
 * The [Espressif tutorials](https://esp-rs.github.io/espressif-trainings/).
-
+* https://beta7.io/posts/bare-metal-rust-on-esp32/
+* https://github.com/esp-rs/espup
+* https://github.com/esp-rs/esp-rust-board
