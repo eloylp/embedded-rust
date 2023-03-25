@@ -18,3 +18,4 @@ A Rust workspace incubator for embedded Rust projects.
 * https://beta7.io/posts/bare-metal-rust-on-esp32/
 * https://github.com/esp-rs/espup
 * https://github.com/esp-rs/esp-rust-board
+* https://github.com/esp-rs/esp-hal/tree/main/esp32c3-hal/examples
