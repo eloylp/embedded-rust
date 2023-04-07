@@ -1,6 +1,6 @@
 #![no_std]
 #![no_main]
-use esp32c3_hal::{
+use hal::{
     clock::ClockControl, peripherals::Peripherals, prelude::*, timer::TimerGroup, Delay, Rtc, IO,
 };
 use esp_backtrace as _;

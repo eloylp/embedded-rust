@@ -6,7 +6,7 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
-hal = { package = "esp32c3-hal", version = "0.7.0" }
-esp-backtrace = { version = "0.5.0", features = ["esp32c3", "panic-handler", "print-uart"] }
-esp-println       = { version = "0.3.1", features = ["esp32c3"] }
-shtcx = {version = "0.11.0"} 
+hal = { workspace = true }
+esp-backtrace = { workspace = true }
+esp-println = { workspace = true }
+shtcx = { version = "0.11.0" }
