@@ -9,7 +9,7 @@ use hal::{
     Rtc, IO,
 };
 
-const I2C_ADDRESS: u8 = 0x20;
+const I2C_ADDRESS: u8 = 0x27;
 
 #[entry]
 fn main() -> ! {
@@ -34,8 +34,8 @@ fn main() -> ! {
 
     let i2c = I2C::new(
         peripherals.I2C0,
-        io.pins.gpio0,
-        io.pins.gpio1,
+        io.pins.gpio10,
+        io.pins.gpio8,
         400u32.kHz(),
         &mut system.peripheral_clock_control,
         &clocks,
