@@ -8,6 +8,8 @@ use hal::{
     clock::ClockControl, i2c::I2C, peripherals::Peripherals, prelude::*, timer::TimerGroup, Delay,
     Rtc, IO,
 };
+
+
 #[entry]
 fn main() -> ! {
     let peripherals = Peripherals::take();
@@ -41,8 +43,6 @@ fn main() -> ! {
     let mut delay = Delay::new(&clocks);
     i2c.write(0x70, &[0x35]).ok(); // wake up MSB
     delay.delay_ms(1000u32);
-
-    shtcx::
 
     loop {
         let mut data = [0u8; 24];
