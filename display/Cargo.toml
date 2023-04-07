@@ -1,0 +1,12 @@
+[package]
+name = "display"
+version = "0.1.0"
+authors = ["eloylp <eloylp@eloylp.dev>"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+hal = { workspace = true }
+esp-backtrace = { workspace = true }
+esp-println = { workspace = true }
+hd44780-driver = {git = "https://github.com/JohnDoneth/hd44780-driver"}
