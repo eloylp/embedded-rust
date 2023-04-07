@@ -8,7 +8,7 @@ use hal::{
     clock::ClockControl, i2c::I2C, peripherals::Peripherals, prelude::*, timer::TimerGroup, Delay,
     Rtc, IO,
 };
-
+use shtcx::{shtc3, PowerMode};
 
 #[entry]
 fn main() -> ! {
@@ -31,7 +31,7 @@ fn main() -> ! {
 
     let io = IO::new(peripherals.GPIO, peripherals.IO_MUX);
 
-    let mut i2c = I2C::new(
+    let i2c = I2C::new(
         peripherals.I2C0,
         io.pins.gpio10,
         io.pins.gpio8,
@@ -41,13 +41,15 @@ fn main() -> ! {
     );
 
     let mut delay = Delay::new(&clocks);
-    i2c.write(0x70, &[0x35]).ok(); // wake up MSB
-    delay.delay_ms(1000u32);
+    let mut sht = shtc3(i2c);
 
     loop {
-        let mut data = [0u8; 24];
-        i2c.write_read(0x70, &[0x5c], &mut data).ok();
-        println!("{:02x?}", data);
-        delay.delay_ms(1000u32)
+        let measure = sht.measure(PowerMode::NormalMode, &mut delay).unwrap();
+        println!(
+            "Temperature: {} C",
+            measure.temperature.as_degrees_celsius()
+        );
+        println!("Humidity: {} %RH", measure.humidity.as_percent());
+        delay.delay_ms(5000u32)
     }
 }
