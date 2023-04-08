@@ -13,7 +13,7 @@ Scoped examples to get the most of the esp32c3 board !
 * [Ambient](./ambient/README.md)
 * [Display](./display/README.md)
   
-### Documentation
+### References
 
 * The [esp32c3](https://github.com/esp-rs/esp-rust-board) board specs.
 * [Embedded rust book](https://docs.rust-embedded.org/book/).
@@ -23,3 +23,4 @@ Scoped examples to get the most of the esp32c3 board !
 * An interesting [article](https://beta7.io/posts/bare-metal-rust-on-esp32/) about no-std development. Includes an interesting section regarding to wifi connections. 
 * The [esup](https://github.com/esp-rs/espup) tool, which allows wasy configurations for other esp32 boards.
 * https://github.com/esp-rs/esp-hal/tree/main/esp32c3-hal/examples
+* An interesting [embedded graphics](https://github.com/embedded-graphics/embedded-graphics) library for no-std applications.
