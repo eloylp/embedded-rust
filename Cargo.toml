@@ -2,7 +2,8 @@
 members = [
     "blinky",
     "ambient",
-    "display"
+    "display",
+    "accel"
 ]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

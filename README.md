@@ -12,6 +12,7 @@ Scoped examples to get the most of the esp32c3 board !
 * [Blinky](./blinky/README.md)
 * [Ambient](./ambient/README.md)
 * [Display](./display/README.md)
+* [Accel](./accel/README.md)
   
 ### References
 
@@ -24,3 +25,4 @@ Scoped examples to get the most of the esp32c3 board !
 * The [esup](https://github.com/esp-rs/espup) tool, which allows wasy configurations for other esp32 boards.
 * https://github.com/esp-rs/esp-hal/tree/main/esp32c3-hal/examples
 * An interesting [embedded graphics](https://github.com/embedded-graphics/embedded-graphics) library for no-std applications.
+* [Wifi support](https://github.com/esp-rs/esp-wifi) for no-std applications
