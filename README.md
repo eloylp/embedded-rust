@@ -9,10 +9,10 @@ A Rust workspace incubator for embedded Rust projects.
 
 Scoped examples to get the most of the esp32c3 board !
 
-* [Blinky](./blinky/README.md)
-* [Ambient](./ambient/README.md)
-* [Display](./display/README.md)
 * [Accel](./accel/README.md)
+* [Ambient](./ambient/README.md)
+* [Blinky](./blinky/README.md)
+* [Display](./display/README.md)
   
 ### References
 
