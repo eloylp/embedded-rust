@@ -1,5 +1,5 @@
 [workspace]
-members = ["accel", "ambient", "blinky", "display"]
+members = ["accel", "ambient", "blinky", "display", "ambient-display"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [workspace.dependencies]

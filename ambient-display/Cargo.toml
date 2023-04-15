@@ -1,0 +1,15 @@
+[package]
+name = "ambient_display"
+version = "0.1.0"
+authors = ["eloylp <eloylp@eloylp.dev>"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+hal = { workspace = true }
+esp-backtrace = { workspace = true }
+esp-println = { workspace = true }
+shtcx = { version = "0.11.0" }
+hd44780-driver = { git = "https://github.com/JohnDoneth/hd44780-driver" }
+shared-bus = "0.2.5"
+#alloc = "1.68.2"
