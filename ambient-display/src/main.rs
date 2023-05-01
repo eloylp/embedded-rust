@@ -1,15 +1,19 @@
 #![no_std]
 #![no_main]
 
+use core::fmt::Write;
 use esp_backtrace as _;
 use esp_println::println;
+use heapless::String;
 
 use hal::{
     clock::ClockControl, i2c::I2C, peripherals::Peripherals, prelude::*, timer::TimerGroup, Delay,
     Rtc, IO,
 };
 
-use hd44780_driver::{Cursor, CursorBlink, Display, DisplayMode, HD44780};
+use hd44780_driver::{
+    display_size::DisplaySize, Cursor, CursorBlink, Display, DisplayMode, HD44780,
+};
 use shtcx::{shtc3, PowerMode};
 
 const DISPLAY_I2C_ADDRESS: u8 = 0x27;
@@ -54,24 +58,39 @@ fn main() -> ! {
 
     let mut lcd = HD44780::new_i2c(proxy2, DISPLAY_I2C_ADDRESS, &mut delay).unwrap();
     lcd.reset(&mut delay).unwrap();
-    lcd.clear(&mut delay).unwrap();
+    lcd.reset(&mut delay).unwrap();
+    //lcd.set_autoscroll(true, &mut delay).unwrap();
     lcd.set_display_mode(
         DisplayMode {
             display: Display::On,
-            cursor_visibility: Cursor::Visible,
-            cursor_blink: CursorBlink::On,
+            cursor_visibility: Cursor::Invisible,
+            cursor_blink: CursorBlink::Off,
         },
         &mut delay,
-    )
-    .unwrap();
-    lcd.write_str("Hello world !", &mut delay).unwrap();
+    );
+    let mut data = String::<32>::new();
+    lcd.write_str("Starting ...", &mut delay).unwrap();
+    delay.delay_ms(1000u32);
+    lcd.reset(&mut delay).unwrap();
+    lcd.write_str("Welcome Rust Galicians !", &mut delay)
+        .unwrap();
+    delay.delay_ms(1000u32);
+
+    let mut message = String::<32>::new();
+
     loop {
+        lcd.reset(&mut delay).unwrap();
+        message.clear();
+
         let measure = sht.measure(PowerMode::NormalMode, &mut delay).unwrap();
-        println!(
-            "Temperature: {} C",
-            measure.temperature.as_degrees_celsius()
+        write!(
+            message,
+            "Temp: {:.2}C HR: {:.2}%",
+            measure.temperature.as_degrees_celsius(),
+            measure.humidity.as_percent()
         );
-        println!("Humidity: {} %RH", measure.humidity.as_percent());
+
+        lcd.write_str(message.as_str(), &mut delay).unwrap();
         delay.delay_ms(5000u32);
     }
 }
