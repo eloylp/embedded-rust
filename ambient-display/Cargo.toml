@@ -12,5 +12,4 @@ esp-println = { workspace = true }
 shared-bus = { workspace = true }
 shtcx = { version = "0.11.0" }
 hd44780-driver = { git = "https://github.com/JohnDoneth/hd44780-driver" }
-heapless = { workspace = true }
-
+ryu = "1.0"

@@ -1,10 +1,8 @@
 #![no_std]
 #![no_main]
 
-use core::fmt::Write;
 use esp_backtrace as _;
 use esp_println::println;
-use heapless::String;
 
 use hal::{
     clock::ClockControl, i2c::I2C, peripherals::Peripherals, prelude::*, timer::TimerGroup, Delay,
@@ -57,9 +55,25 @@ fn main() -> ! {
     let mut sht = shtc3(proxy1);
 
     let mut lcd = HD44780::new_i2c(proxy2, DISPLAY_I2C_ADDRESS, &mut delay).unwrap();
+    lcd.set_display_mode(
+        DisplayMode {
+            display: Display::On,
+            cursor_visibility: Cursor::Visible,
+            cursor_blink: CursorBlink::On,
+        },
+        &mut delay,
+    )
+    .unwrap();
+
+    lcd.write_str("Welcome Rust", &mut delay).unwrap();
+    lcd.set_cursor_pos(20, &mut delay).unwrap();
+    lcd.write_str("Galicians !", &mut delay).unwrap();
+
+    delay.delay_ms(4000u32);
+
+    // Prepare display for continuous data streaming.
+    lcd.clear(&mut delay).unwrap();
     lcd.reset(&mut delay).unwrap();
-    lcd.reset(&mut delay).unwrap();
-    //lcd.set_autoscroll(true, &mut delay).unwrap();
     lcd.set_display_mode(
         DisplayMode {
             display: Display::On,
@@ -67,30 +81,31 @@ fn main() -> ! {
             cursor_blink: CursorBlink::Off,
         },
         &mut delay,
-    );
-    let mut data = String::<32>::new();
-    lcd.write_str("Starting ...", &mut delay).unwrap();
-    delay.delay_ms(1000u32);
-    lcd.reset(&mut delay).unwrap();
-    lcd.write_str("Welcome Rust Galicians !", &mut delay)
-        .unwrap();
-    delay.delay_ms(1000u32);
-
-    let mut message = String::<32>::new();
+    )
+    .unwrap();
 
     loop {
-        lcd.reset(&mut delay).unwrap();
-        message.clear();
-
         let measure = sht.measure(PowerMode::NormalMode, &mut delay).unwrap();
-        write!(
-            message,
-            "Temp: {:.2}C HR: {:.2}%",
-            measure.temperature.as_degrees_celsius(),
-            measure.humidity.as_percent()
-        );
 
-        lcd.write_str(message.as_str(), &mut delay).unwrap();
-        delay.delay_ms(5000u32);
+        // We only reset the cursor here, and rewrite current characters,
+        // as all lines have the same, fixed size.
+        lcd.reset(&mut delay).unwrap();
+
+        // Show temperature
+        lcd.write_str("TempC : ", &mut delay).unwrap();
+        let mut buffer = ryu::Buffer::new();
+        let temp = buffer.format(measure.temperature.as_degrees_celsius());
+        lcd.write_str(temp, &mut delay).unwrap();
+
+        // Move cursor to next line in display:
+        lcd.set_cursor_pos(20, &mut delay).unwrap();
+
+        // Show humidity
+        lcd.write_str("HR%   : ", &mut delay).unwrap();
+        let mut buffer = ryu::Buffer::new();
+        let hr = buffer.format(measure.humidity.as_percent());
+        lcd.write_str(hr, &mut delay).unwrap();
+
+        delay.delay_ms(1000u32);
     }
 }
