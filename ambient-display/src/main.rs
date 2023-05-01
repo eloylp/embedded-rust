@@ -2,16 +2,12 @@
 #![no_main]
 
 use esp_backtrace as _;
-use esp_println::println;
 
 use hal::{
     clock::ClockControl, i2c::I2C, peripherals::Peripherals, prelude::*, timer::TimerGroup, Delay,
     Rtc, IO,
 };
-
-use hd44780_driver::{
-    display_size::DisplaySize, Cursor, CursorBlink, Display, DisplayMode, HD44780,
-};
+use hd44780_driver::{Cursor, CursorBlink, Display, DisplayMode, HD44780};
 use shtcx::{shtc3, PowerMode};
 
 const DISPLAY_I2C_ADDRESS: u8 = 0x27;
